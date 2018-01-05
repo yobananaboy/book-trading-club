@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+$white: #fafafa;
+$yellow: #ffea00;
+$lightgreen: #00e676;
+$blue: #64b5f6;
+$darkblue: #2286c3;
+$background-blue: #005CB2;
+$lightblue: #9be7ff;
+$darkgrey: #444;
+$orange: #ff3d00;
+$black: #0c0c0c;
+
+
+/* Big thank you to Rachel Andrew */
+
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+body {
+	margin: 0 5px 10px 5px;
+	font-family: 'Roboto', 'sans-serif';
+	color: $darkgrey;
+	background-color: $background-blue;
+	overflow-y: scroll
+}
+h1, p {
+	margin: 0 0 1em 0;
+}
+.wrapper {
+	max-width: 1200px;
+	margin: 0 10px;
+	display: grid;
+	grid-gap: 10px;
+}
+/* no grid support? */
+
+.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+}
+.wrapper {
+	display: grid;
+	margin: 0 auto;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-auto-rows: minmax(20px, auto);
+}
+.book {
+	/* needed for the flex layout*/
+	margin-left: 5px;
+	margin-right: 5px;
+	flex: 1 1 200px;
+}
+.nav, .footer, .trades, .book-section-header, .body, .login-form, .signup-form, .settings-form {
+	margin-left: 5px;
+	margin-right: 5px;
+	flex: 0 1 100%;
+	grid-column: 1 / -1;
+}
+.wrapper>* {
+	color: black;
+	border-radius: 3px;
+	padding: 20px;
+	margin-bottom: 10px;
+}
+.nav {
+	border-radius: 0 0 3px 3px;
+}
+/* We need to set the margin used on flex items to 0 as we have gaps in grid.  */
+
+@supports (display: grid) {
+	.wrapper>* {
+		margin: 0;
+	}
+}
+/* nav bar styling */
+
+.nav {
+	background-color: $darkblue;
+	border-bottom: 3px solid darken($darkblue, 15%);
+	font-size: 1.2em;
+}
+.nav-title {
+	width: 100%;
+	display: block;
+	float: left;
+	a {
+		padding: 10px;
+		font-weight: bold;
+		display: inline-block;
+	}
+}
+a {
+	color: $white;
+	text-decoration: none;
+}
+/* nav */
+
+.nav-links {
+	float: right;
+	display: inline-block;
+}
+.nav-wide {
+	display: block;
+	.nav-link, .nav-button {
+		padding-bottom: 10px;
+		margin-left: 1em;
+		transition: all 0.1s ease-in;
+	}
+	.nav-button {
+		display: inline-block;
+		padding: 10px;
+		border-radius: 3px;
+		min-width: 85px;
+		text-align: center;
+	}
+	#login {
+		color: $black;
+		background-color: $lightgreen;
+		border-bottom: 2px solid darken($lightgreen, 15%);
+		cursor: pointer;
+		&:active {
+			transform: translateY(2px);
+			border: none !important;
+		}
+		&.active {
+			border-bottom: 2px solid $yellow;
+		}
+	}
+	#logout, #signup {
+		background-color: $orange;
+		border-bottom: 2px solid darken($orange, 15%);
+		cursor: pointer;
+		color: $black;
+		.active {
+			border-bottom: 2px solid yellow;
+		}
+		&:active {
+			transform: translateY(2px);
+			border: none !important;
+		}
+		&.active {
+			border-bottom: 2px solid $yellow;
+		}
+	}
+}
+.nav-link:hover {
+	border-bottom: 2px solid $white;
+}
+.active {
+	color: $yellow;
+	border-bottom: 2px solid darken($darkblue, 15%);
+}
+.nav-mobile {
+	display: none;
+}
+// trade requests
+.trades {
+	width: 80%;
+	max-width: 750px;
+	margin: 0 auto;
+	text-align: center;
+}
+.request-button {
+	display: inline-block;
+	padding: 10px;
+	border-radius: 3px;
+	width: 45%;
+	text-align: center;
+}
+.book-view-request-button {
+	display: block;
+	padding: 10px;
+	margin: 0 auto;
+	width: 95%;
+	text-align: center;
+}
+#requests-user-made, .request-trade-button, .decline-trade-button {
+	margin-right: 5px;
+	background-color: $orange;
+	border-bottom: 2px solid darken($orange, 15%);
+	cursor: pointer;
+	&:active {
+		transform: translateY(2px);
+		border: none !important;
+	}
+}
+#requests-for-user, .accept-trade-button {
+	background-color: $yellow;
+	border-bottom: 2px solid darken($yellow, 15%);
+	cursor: pointer;
+	color: $black;
+	&:active {
+		transform: translateY(2px);
+		border: none !important;
+	}
+}
+#requests-user-made-list, #requests-for-user-list {
+	display: none;
+	list-style-type: none;
+	text-align: left;
+	background-color: $white;
+	margin: 5px auto;
+	padding: 10px 15px;
+	border-radius: 3px;
+	width: 90%;
+	border-bottom: 2px solid $darkblue;
+	&.show {
+		display: block;	
+	}
+}
+.book-list-message {
+	color: $white;
+}
+.trade-status-message {
+	font-weight: bold;
+	&.received {
+		color: $blue;
+	}
+	&.up-for-trade {
+		color: $orange;
+	}
+	&.traded {
+		color: darken($blue, 40%);
+	}
+	&.requested {
+		color: darken($orange, 20%);
+	}
+}
+.book-request-item {
+	width: 98%;
+	margin-bottom: 20px;
+	padding: 5px 0;
+	border-bottom: 2px solid $darkblue;
+	a {
+		display: inline-block;
+		margin-top: 5px;
+		margin: 5px 5% 5px 5%;
+		width: 40%;
+	}
+}
+// book section header
+.book-section-header {
+	h1 {
+		padding-bottom: 20px;
+		color: white;
+		border-bottom: 2px solid $white;
+	}
+	.error-message {
+		display: inline-block;
+		border-radius: 3px;
+		margin-top: 10px;
+		padding: 1em;
+		background-color: $white;
+		color: $orange;
+	}
+	input {
+		font-size: 1.5em;
+		width: 60%;
+		margin-right: 0.5em;
+		padding: 0.5em;
+		background-color: $white;
+		border-radius: 3px;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+		border-bottom: 2px solid $black;
+	}
+}
+#book-search-button {
+	font-size: 1.2em;
+	width: 6em;
+	display: inline-block;
+	color: $black;
+	vertical-align: super;
+	border-radius: 3px;
+	padding: 10px;
+	background-color: $lightgreen;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 2px solid darken($lightgreen, 15%);
+	cursor: pointer;
+	text-align: center;
+	&:active {
+		transform: translateY(2px);
+		border-bottom: 2px solid $background-blue;
+	}
+}
+// books displayed
+.book {
+	boder-radius: 3px;
+	align-self: center;
+	border-bottom: 2px solid $black;
+	background-color: $white;
+	img {
+		display: block;
+		margin: 0 auto 15px auto;
+		max-width: 100%;
+		height: 200px;
+	}
+}
+// login, sign up and settings forms
+.login-form, .signup-form, .settings-form {
+	margin: 10px auto;
+	width: 60%;
+	background-color: $white;
+	padding-left: 40px;
+	border-bottom: 2px solid $black;
+	a {
+		color: $darkblue;
+		&:hover {
+			color: $blue;
+		}
+	}
+	.form-group {
+		margin: 20px 0;
+		label {
+      display: inline-block;
+      width: 8em;
+			font-weight: bold;
+			margin-right: 0.5em;
+		}
+		input {
+			width: 70%;
+			margin-top: 0.5em;
+			padding: 0.5em;
+			background-color: #eceff1;
+			border-radius: 3px;
+			border-top: none;
+			border-left: none;
+			border-right: none;
+			border-bottom: 2px solid $black;
+		}
+	}
+  .error-message {
+    color: $orange;
+  }
+	.reg-form-button {
+		display: block;
+		padding: 10px;
+		border-radius: 3px;
+		min-width: 85px;
+		text-align: center;
+    border: none;
+    margin: 0 auto;
+	}
+	#login-form-button, #settings-form-button {
+		color: $black;
+		background-color: $lightgreen;
+		border-bottom: 2px solid darken($lightgreen, 15%);
+		cursor: pointer;
+		&:active {
+			transform: translateY(2px);
+			border: none !important;
+		}
+	}
+	#signup-form-button {
+		background-color: $orange;
+		border-bottom: 2px solid darken($orange, 15%);
+		cursor: pointer;
+		&:active {
+			transform: translateY(2px);
+			border: none !important;
+		}
+	}
+}
+// Footer
+.footer {
+	color: $white;
+	text-align: center;
+	a {
+		color: $yellow;
+		&:hover {
+			color: #e64a19;
+		}
+	}
+}
+// Mobile settings
+@media screen and (max-width: 799px) {
+	/* mobile nav */
+	.nav-wide {
+		display: none;
+	}
+	.nav-mobile {
+		display: block;
+	}
+	#burger {
+		padding-left: 40px;
+		float: right;
+		font-size: 1.3em;
+	}
+	.trades {
+		width: 100%;
+	}
+	.book-request-list {
+		width: 100%;
+	}
+	.mobile-links {
+		padding: 10px 0;
+		display: none;
+		background-color: lighten($darkblue, 5%);
+		overflow: hidden;
+		clear: both;
+		width: 100%;
+		border-radius: 3px;
+		border-bottom: 2px solid darken($blue, 50%);
+		border-radius: 0 0 3px 3px;
+	}
+	.show {
+		display: block;
+	}
+	.nav-link, .nav-button {
+		text-decoration: none;
+		display: inline-block;
+		float: left;
+		clear: left;
+		margin-left: 20px;
+		padding: 0.3em 0.5em;
+		border-left: 5px solid lighten($darkblue, 5%);
+		&:hover {
+			border-bottom: none;
+			border-left: 5px solid $white;
+		}
+	}
+	.nav-links {
+		width: 100%;
+	}
+	.active {
+		border-bottom: none;
+		border-left: 5px solid darken($darkblue, 15%);
+	}
+	.request-button {
+		width: 100%;
+		margin-bottom: 5px;
+	}
+	.book-section-header {
+		input {
+			width: 100%;
+			margin-bottom: 0.5em;
+		}
+	}
+	#book-search-button {
+		vertical-align: middle;
+	}
+	.book {
+		margin: 0 auto;
+		flex: 0 1 100%;
+		grid-column: span 1;
+		img {
+			max-width: 100%;
+			height: auto;
+			max-height: 300px;
+		}
+	}
+	.login-form, .signup-form {
+		width: 100%;
+	}
+}
+.loader {
+  border: 16px solid white;
+  border-top: 16px solid #ff5252;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  animation: spin 1.5s linear infinite;
+  color: transparent; }
+
+.loader:after {
+  content: ''; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }

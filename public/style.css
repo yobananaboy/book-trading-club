@@ -1,0 +1,397 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);/* Big thank you to Rachel Andrew */
+*, *:before, *:after {
+  box-sizing: border-box; }
+
+body {
+  margin: 0 5px 10px 5px;
+  font-family: 'Roboto', 'sans-serif';
+  color: #444;
+  background-color: #005CB2;
+  overflow-y: scroll; }
+
+h1, p {
+  margin: 0 0 1em 0; }
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 10px;
+  display: grid;
+  grid-gap: 10px; }
+
+/* no grid support? */
+.wrapper {
+  display: flex;
+  flex-wrap: wrap; }
+
+.wrapper {
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: minmax(20px, auto); }
+
+.book {
+  /* needed for the flex layout*/
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 1 1 200px; }
+
+.nav, .footer, .trades, .book-section-header, .body, .login-form, .signup-form, .settings-form {
+  margin-left: 5px;
+  margin-right: 5px;
+  flex: 0 1 100%;
+  grid-column: 1 / -1; }
+
+.wrapper > * {
+  color: black;
+  border-radius: 3px;
+  padding: 20px;
+  margin-bottom: 10px; }
+
+.nav {
+  border-radius: 0 0 3px 3px; }
+
+/* We need to set the margin used on flex items to 0 as we have gaps in grid.  */
+@supports (display: grid) {
+  .wrapper > * {
+    margin: 0; } }
+
+/* nav bar styling */
+.nav {
+  background-color: #2286c3;
+  border-bottom: 3px solid #175982;
+  font-size: 1.2em; }
+
+.nav-title {
+  width: 100%;
+  display: block;
+  float: left; }
+  .nav-title a {
+    padding: 10px;
+    font-weight: bold;
+    display: inline-block; }
+
+a {
+  color: #fafafa;
+  text-decoration: none; }
+
+/* nav */
+.nav-links {
+  float: right;
+  display: inline-block; }
+
+.nav-wide {
+  display: block; }
+  .nav-wide .nav-link, .nav-wide .nav-button {
+    padding-bottom: 10px;
+    margin-left: 1em;
+    transition: all 0.1s ease-in; }
+  .nav-wide .nav-button {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 3px;
+    min-width: 85px;
+    text-align: center; }
+  .nav-wide #login {
+    color: #0c0c0c;
+    background-color: #00e676;
+    border-bottom: 2px solid #009a4f;
+    cursor: pointer; }
+    .nav-wide #login:active {
+      transform: translateY(2px);
+      border: none !important; }
+    .nav-wide #login.active {
+      border-bottom: 2px solid #ffea00; }
+  .nav-wide #logout, .nav-wide #signup {
+    background-color: #ff3d00;
+    border-bottom: 2px solid #b32b00;
+    cursor: pointer;
+    color: #0c0c0c; }
+    .nav-wide #logout .active, .nav-wide #signup .active {
+      border-bottom: 2px solid yellow; }
+    .nav-wide #logout:active, .nav-wide #signup:active {
+      transform: translateY(2px);
+      border: none !important; }
+    .nav-wide #logout.active, .nav-wide #signup.active {
+      border-bottom: 2px solid #ffea00; }
+
+.nav-link:hover {
+  border-bottom: 2px solid #fafafa; }
+
+.active {
+  color: #ffea00;
+  border-bottom: 2px solid #175982; }
+
+.nav-mobile {
+  display: none; }
+
+.trades {
+  width: 80%;
+  max-width: 750px;
+  margin: 0 auto;
+  text-align: center; }
+
+.request-button {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 3px;
+  width: 45%;
+  text-align: center; }
+
+.book-view-request-button {
+  display: block;
+  padding: 10px;
+  margin: 0 auto;
+  width: 95%;
+  text-align: center; }
+
+#requests-user-made, .request-trade-button, .decline-trade-button {
+  margin-right: 5px;
+  background-color: #ff3d00;
+  border-bottom: 2px solid #b32b00;
+  cursor: pointer; }
+  #requests-user-made:active, .request-trade-button:active, .decline-trade-button:active {
+    transform: translateY(2px);
+    border: none !important; }
+
+#requests-for-user, .accept-trade-button {
+  background-color: #ffea00;
+  border-bottom: 2px solid #b3a400;
+  cursor: pointer;
+  color: #0c0c0c; }
+  #requests-for-user:active, .accept-trade-button:active {
+    transform: translateY(2px);
+    border: none !important; }
+
+#requests-user-made-list, #requests-for-user-list {
+  display: none;
+  list-style-type: none;
+  text-align: left;
+  background-color: #fafafa;
+  margin: 5px auto;
+  padding: 10px 15px;
+  border-radius: 3px;
+  width: 90%;
+  border-bottom: 2px solid #2286c3; }
+  #requests-user-made-list.show, #requests-for-user-list.show {
+    display: block; }
+
+.book-list-message {
+  color: #fafafa; }
+
+.trade-status-message {
+  font-weight: bold; }
+  .trade-status-message.received {
+    color: #64b5f6; }
+  .trade-status-message.up-for-trade {
+    color: #ff3d00; }
+  .trade-status-message.traded {
+    color: #084e86; }
+  .trade-status-message.requested {
+    color: #992500; }
+
+.book-request-item {
+  width: 98%;
+  margin-bottom: 20px;
+  padding: 5px 0;
+  border-bottom: 2px solid #2286c3; }
+  .book-request-item a {
+    display: inline-block;
+    margin-top: 5px;
+    margin: 5px 5% 5px 5%;
+    width: 40%; }
+
+.book-section-header h1 {
+  padding-bottom: 20px;
+  color: white;
+  border-bottom: 2px solid #fafafa; }
+
+.book-section-header .error-message {
+  display: inline-block;
+  border-radius: 3px;
+  margin-top: 10px;
+  padding: 1em;
+  background-color: #fafafa;
+  color: #ff3d00; }
+
+.book-section-header input {
+  font-size: 1.5em;
+  width: 60%;
+  margin-right: 0.5em;
+  padding: 0.5em;
+  background-color: #fafafa;
+  border-radius: 3px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #0c0c0c; }
+
+#book-search-button {
+  font-size: 1.2em;
+  width: 6em;
+  display: inline-block;
+  color: #0c0c0c;
+  vertical-align: super;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: #00e676;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #009a4f;
+  cursor: pointer;
+  text-align: center; }
+  #book-search-button:active {
+    transform: translateY(2px);
+    border-bottom: 2px solid #005CB2; }
+
+.book {
+  boder-radius: 3px;
+  align-self: center;
+  border-bottom: 2px solid #0c0c0c;
+  background-color: #fafafa; }
+  .book img {
+    display: block;
+    margin: 0 auto 15px auto;
+    max-width: 100%;
+    height: 200px; }
+
+.login-form, .signup-form, .settings-form {
+  margin: 10px auto;
+  width: 60%;
+  background-color: #fafafa;
+  padding-left: 40px;
+  border-bottom: 2px solid #0c0c0c; }
+  .login-form a, .signup-form a, .settings-form a {
+    color: #2286c3; }
+    .login-form a:hover, .signup-form a:hover, .settings-form a:hover {
+      color: #64b5f6; }
+  .login-form .form-group, .signup-form .form-group, .settings-form .form-group {
+    margin: 20px 0; }
+    .login-form .form-group label, .signup-form .form-group label, .settings-form .form-group label {
+      display: inline-block;
+      width: 8em;
+      font-weight: bold;
+      margin-right: 0.5em; }
+    .login-form .form-group input, .signup-form .form-group input, .settings-form .form-group input {
+      width: 70%;
+      margin-top: 0.5em;
+      padding: 0.5em;
+      background-color: #eceff1;
+      border-radius: 3px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 2px solid #0c0c0c; }
+  .login-form .error-message, .signup-form .error-message, .settings-form .error-message {
+    color: #ff3d00; }
+  .login-form .reg-form-button, .signup-form .reg-form-button, .settings-form .reg-form-button {
+    display: block;
+    padding: 10px;
+    border-radius: 3px;
+    min-width: 85px;
+    text-align: center;
+    border: none;
+    margin: 0 auto; }
+  .login-form #login-form-button, .login-form #settings-form-button, .signup-form #login-form-button, .signup-form #settings-form-button, .settings-form #login-form-button, .settings-form #settings-form-button {
+    color: #0c0c0c;
+    background-color: #00e676;
+    border-bottom: 2px solid #009a4f;
+    cursor: pointer; }
+    .login-form #login-form-button:active, .login-form #settings-form-button:active, .signup-form #login-form-button:active, .signup-form #settings-form-button:active, .settings-form #login-form-button:active, .settings-form #settings-form-button:active {
+      transform: translateY(2px);
+      border: none !important; }
+  .login-form #signup-form-button, .signup-form #signup-form-button, .settings-form #signup-form-button {
+    background-color: #ff3d00;
+    border-bottom: 2px solid #b32b00;
+    cursor: pointer; }
+    .login-form #signup-form-button:active, .signup-form #signup-form-button:active, .settings-form #signup-form-button:active {
+      transform: translateY(2px);
+      border: none !important; }
+
+.footer {
+  color: #fafafa;
+  text-align: center; }
+  .footer a {
+    color: #ffea00; }
+    .footer a:hover {
+      color: #e64a19; }
+
+@media screen and (max-width: 799px) {
+  /* mobile nav */
+  .nav-wide {
+    display: none; }
+  .nav-mobile {
+    display: block; }
+  #burger {
+    padding-left: 40px;
+    float: right;
+    font-size: 1.3em; }
+  .trades {
+    width: 100%; }
+  .book-request-list {
+    width: 100%; }
+  .mobile-links {
+    padding: 10px 0;
+    display: none;
+    background-color: #2695d9;
+    overflow: hidden;
+    clear: both;
+    width: 100%;
+    border-radius: 3px;
+    border-bottom: 2px solid #053256;
+    border-radius: 0 0 3px 3px; }
+  .show {
+    display: block; }
+  .nav-link, .nav-button {
+    text-decoration: none;
+    display: inline-block;
+    float: left;
+    clear: left;
+    margin-left: 20px;
+    padding: 0.3em 0.5em;
+    border-left: 5px solid #2695d9; }
+    .nav-link:hover, .nav-button:hover {
+      border-bottom: none;
+      border-left: 5px solid #fafafa; }
+  .nav-links {
+    width: 100%; }
+  .active {
+    border-bottom: none;
+    border-left: 5px solid #175982; }
+  .request-button {
+    width: 100%;
+    margin-bottom: 5px; }
+  .book-section-header input {
+    width: 100%;
+    margin-bottom: 0.5em; }
+  #book-search-button {
+    vertical-align: middle; }
+  .book {
+    margin: 0 auto;
+    flex: 0 1 100%;
+    grid-column: span 1; }
+    .book img {
+      max-width: 100%;
+      height: auto;
+      max-height: 300px; }
+  .login-form, .signup-form {
+    width: 100%; } }
+
+.loader {
+  border: 16px solid white;
+  border-top: 16px solid #ff5252;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  animation: spin 1.5s linear infinite;
+  color: transparent; }
+
+.loader:after {
+  content: ''; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
