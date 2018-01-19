@@ -7,7 +7,7 @@ class BookList extends Component {
     }
     
     render() {
-        let display = this.props.booksToDisplay;
+        let display = this.props.display;
         let booklist = [];
         if(this.props.books.length >= 1) {
             // loop through list of books and create a differen booklist depending on which list view chosen

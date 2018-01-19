@@ -10,8 +10,8 @@ export const user = (state = false, action) => {
 
 export const userMessage = (state = '', action) => {
     switch(action.type) {
-        case 'USER_SETTINGS_MESSAGE_UPDATED':
-            return action.userMessage;
+        case 'USER_MESSAGE_UPDATED':
+            return action.message;
             
         default:
             return state;

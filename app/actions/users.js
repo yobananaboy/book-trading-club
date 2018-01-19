@@ -28,7 +28,9 @@ export const updateUser = (user) => {
     return (dispatch) => {
         axios.post(updateUrl, user)
             .then(res => {
+                console.log(res.data);
                 if(res.data.success) {
+                    console.log('success');
                     dispatch(updateUserMessage('User settings updated'));
                 }
             })
@@ -101,6 +103,6 @@ export const userUpdated = (user) => {
 export const updateUserMessage = (message) => {
     return {
         type: 'USER_MESSAGE_UPDATED',
-        userMessage: message
+        message
     };
 };

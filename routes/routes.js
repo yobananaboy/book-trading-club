@@ -22,4 +22,6 @@ module.exports = function(app, passport, express, path) {
 	app.post('/accepttraderequest', book_controller.accept_book_trade_request);
 	// when a user declines a trade request, update book on database
 	app.post('/declinetraderequest', book_controller.decline_book_trade_request);
+	// static rendering on the server
+	app.get('*', book_controller.render_server_data);
 };

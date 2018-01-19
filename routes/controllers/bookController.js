@@ -2,6 +2,22 @@ const Book = require('../../config/database').Books;
 const GoogleBooks = require('google-books-search');
 const mongoose = require('mongoose');
 
+import { booksUpdated, booksHaveErrored } from '../../app/actions/books';
+
+import React, { Component } from 'react';
+import { renderToString } from 'react-dom/server';
+
+import StaticRouter from 'react-router-dom/StaticRouter';
+import { renderRoutes } from 'react-router-config';
+
+import configureStore from '../../app/store/configureStore';
+
+import { Provider } from 'react-redux';
+
+import routes from '../../app/routes/routes';
+
+let store = configureStore();
+
 // get book data
 exports.get_book_data = (req, res) => {
 	// find all books on database, send data if no error
@@ -192,5 +208,29 @@ exports.decline_book_trade_request = (req, res) => {
 				}));
 			});
 		});
+	});
+};
+
+exports.render_server_data = (req, res) => {
+	
+	Book.find({}, (err, booksData) => {
+		if(err) {
+			console.log(err);
+			return store.dispatch(booksHaveErrored(true));
+		}
+		store.dispatch(booksUpdated(booksData));
+		let data = store.getState();
+		let context = {};
+        const content = renderToString(
+          <Provider store={store}>
+            <StaticRouter location={req.url} context={context}>
+              {renderRoutes(routes)}
+            </StaticRouter>
+          </Provider>
+        );
+        if(context.status === 404) {
+          res.status(404);
+        }
+        res.render('index', {data: JSON.stringify(data), content });
 	});
 };

@@ -3,7 +3,7 @@ import BookTradesAvailable from './BookTradesAvailable';
 import BookList from './BookList';
 import BookSectionHeader from './BookSectionHeader';
 
-export const Books = (props) => {
+export const UserBooks = (props) => {
     let booktrades;
     if(props.user) {
         booktrades = <BookTradesAvailable {...props} />;
@@ -12,11 +12,7 @@ export const Books = (props) => {
                 <div className="wrapper">
                     {booktrades}
                     <BookSectionHeader {...props} />
-                    <BookList {...props} />
+                    <BookList {...props} display='user' />
                 </div>
         );
 };
-
-/*
-
-*/
