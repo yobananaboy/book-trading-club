@@ -2,7 +2,7 @@ require('babel-register')({
     presets: ["env", "react", "stage-2", "es2015"],
     plugins: ["transform-class-properties"]
 });
-
+const cors = require('cors');
 const http = require('http');
 const path = require('path');
 require('dotenv').config();
@@ -34,12 +34,14 @@ app.use(passport.session());
 
 app.use('/public', express.static('public'));
 
+app.use(cors());
+
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
 var server = http.createServer(app);
 
-require('./config/passport')(passport);
+// require('./config/passport')(passport);
 require('./routes/routes')(app, passport, express, path);
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
