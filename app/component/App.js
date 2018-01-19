@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import { Books } from '../container/Books/Books';
-import LoginPage from '../container/Users/LoginPage';
-import SignupPage from '../container/Users/SignupPage';
-import SettingsPage from '../container/Users/SettingsPage';
 import { Footer } from './Footer';
 import { connect } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
+
 import { makeBookSearch, getBooks, makeTradeRequest, acceptTradeRequest, declineTradeRequest } from '../actions/books';
 import { signup, login, checkUserLoggedIn, updateUser, updateUserMessage } from '../actions/users';
-import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
     constructor(props) {
@@ -24,15 +21,7 @@ class App extends Component {
         return(
             <div>
                 <Header {...this.props} />
-                <Switch>
-                    <Route path ="/" exact render = {(props) => (<Books {...this.props} booksToDisplay='all' />)} />
-                    <Route path ="/books/all" exact render = {(props) => (<Books {...this.props} booksToDisplay='all' />)} />
-                    <Route path ="/books/available" exact render = {(props) => (<Books {...this.props} booksToDisplay='available' />)} />
-                    <Route path ="/user/books" exact render = {(props) => (<Books {...this.props} booksToDisplay='user' />)} />
-                    <Route path ="/user/settings" exact render = {(props) => (<SettingsPage {...this.props} />)} />
-                    <Route path ="/login" exact render = {(props) => (<LoginPage {...this.props} />)} />
-                    <Route path ="/signup" exact render = {(props) => (<SignupPage {...this.props} />)} />
-                </Switch>
+                    {renderRoutes(this.props.route.routes, {...this.props})}
                 <Footer />
             </div>
         );
@@ -67,6 +56,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-  pure: false
-})(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

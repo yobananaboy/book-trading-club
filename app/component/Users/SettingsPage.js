@@ -58,30 +58,31 @@ class SettingsPage extends Component {
     }
     
     render() {
+        console.log(this.props);
         let userMessage;
-        if(this.props.userMessage.length > 1) {
+        if(this.props.userMessage) {
             userMessage = <p>{this.props.userMessage}</p>;
         }
         if(!this.props.user) {
-            return <div class="wrapper">
+            return <div className="wrapper">
                         <p>Please <Link to="/login">log in</Link> or <Link to="/signup">sign up</Link> to update your settings.</p>
                     </div>;
         }
         return (
-            <div class="wrapper">
+            <div className="wrapper">
                 <form onSubmit={this.handleSubmit} className="settings-form">
                 	<p>Please update your details below:</p>
-                	<div class="form-group">
-                		<label>Name</label> <input class="settings-signup-form" type="text" placeholder={this.props.user ? this.props.user.name : ''} value={this.state.name} id="name-input" onChange={this.handleChange} />
+                	<div className="form-group">
+                		<label>Name</label> <input className="settings-signup-form" type="text" placeholder={this.props.user ? this.props.user.name : ''} value={this.state.name} id="name-input" onChange={this.handleChange} />
                 	</div>
-                	<div class="form-group">
-                		<label>City</label> <input class="settings-signup-form" type="text" placeholder={this.props.user ? this.props.user.location.city: ''} value={this.state.city} id="city-input" onChange={this.handleChange} />
+                	<div className="form-group">
+                		<label>City</label> <input className="settings-signup-form" type="text" placeholder={this.props.user ? this.props.user.location.city: ''} value={this.state.city} id="city-input" onChange={this.handleChange} />
                 	</div>
-                	<div class="form-group">
-                		<label>State</label> <input class="settings-signup-form" type="text" placeholder={this.props.user ? this.props.user.location.state : ''} value={this.state.stateLocation} id="state-input" onChange={this.handleChange} />
+                	<div className="form-group">
+                		<label>State</label> <input className="settings-signup-form" type="text" placeholder={this.props.user ? this.props.user.location.state : ''} value={this.state.stateLocation} id="state-input" onChange={this.handleChange} />
                 	</div>
                 	{userMessage}
-                	<button class="reg-form-button" id="settings-form-button" type="submit">Update settings</button>
+                	<button className="reg-form-button" id="settings-form-button" type="submit">Update settings</button>
                 </form>
             </div>
             );

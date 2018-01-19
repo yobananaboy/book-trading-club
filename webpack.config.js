@@ -35,7 +35,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['es2015', 'env', 'react', 'stage-3'],
-            plugins: ["transform-class-properties"]
+            plugins: ["transform-class-properties", ]
           }
         }
       }
