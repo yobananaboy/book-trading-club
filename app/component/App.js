@@ -14,7 +14,9 @@ class App extends Component {
     
     componentWillMount() {
         this.props.checkUserLoggedIn();
-        this.props.getBooks();
+        if(!this.props.books) {
+            this.props.getBooks();    
+        }
     }
     
     render() {
