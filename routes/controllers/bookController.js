@@ -215,6 +215,8 @@ exports.decline_book_trade_request = (req, res) => {
 exports.render_server_data = (req, res) => {
 	if (typeof req.user != "undefined") {
 		store.dispatch(userUpdated(req.user));
+	} else {
+		store.dispatch(userUpdated(false));
 	}
 	Book.find({}, (err, booksData) => {
 		if(err) {
