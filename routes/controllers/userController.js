@@ -72,9 +72,9 @@ exports.update_user = function(req, res) {
 					err: true
 				}));
 			}
-			console.log('success');
 			res.json({
 				success: true,
+				user
 			});
 		});
 	});

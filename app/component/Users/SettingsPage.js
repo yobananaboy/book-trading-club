@@ -14,8 +14,9 @@ class SettingsPage extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    componentWillMount() {
+    componentDidMount() {
         this.props.updateUserMessage('');
+        this.props.checkUserLoggedIn();
     }
     
     handleChange = (e) => {
@@ -58,7 +59,6 @@ class SettingsPage extends Component {
     }
     
     render() {
-        console.log(this.props);
         let userMessage;
         if(this.props.userMessage) {
             userMessage = <p>{this.props.userMessage}</p>;
