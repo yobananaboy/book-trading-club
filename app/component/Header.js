@@ -21,18 +21,18 @@ class Header extends Component {
 	// https://codepen.io/carloluis/pen/gWzPzd
 	render() {
 		let navlinks = <div className="nav-links">
-							<NavLink to="/books/all" className="nav-link" activeClassName="active" id="all" exact>All books</NavLink>
-							<NavLink to="/books/available" className="nav-link" activeClassName="active" id="available" exact>Available books</NavLink>
-							<NavLink to="/login" className="nav-button" id="login" activeClassName="active" exact>Login</NavLink>
-							<NavLink to="/signup" className="nav-button" id="signup" activeClassName="active" exact>Sign up</NavLink>
+							<NavLink to="/books/all" className="nav-link" id="all" exact>All books</NavLink>
+							<NavLink to="/books/available" className="nav-link" id="available" exact>Available books</NavLink>
+							<NavLink to="/login" className="nav-button" id="login" exact>Login</NavLink>
+							<NavLink to="/signup" className="nav-button" id="signup" exact>Sign up</NavLink>
 						</div>;
 		if(this.props.user) {
 			navlinks = <div className="nav-links">
-							<NavLink to="/books/all" className="nav-link" activeClassName="active" id="all" exact>All books</NavLink>
-							<NavLink to="/books/available" className="nav-link" activeClassName="active" id="available" exact>Available books</NavLink>
-							<NavLink to="/user/books" className="nav-link" activeClassName="active" id="mybooks" exact>My books</NavLink>
-	 						<NavLink to="/user/settings" className="nav-link" activeClassName="active" id="settings" exact>Settings</NavLink>
-							<a href="/logout" className="nav-button" id="logout" activeClassName="active" exact>Logout</a>
+							<NavLink to="/books/all" className="nav-link" id="all" exact>All books</NavLink>
+							<NavLink to="/books/available" className="nav-link" id="available" exact>Available books</NavLink>
+							<NavLink to="/user/books" className="nav-link" id="mybooks" exact>My books</NavLink>
+	 						<NavLink to="/user/settings" className="nav-link" id="settings" exact>Settings</NavLink>
+							<a href="/logout" className="nav-button" id="logout" exact>Logout</a>
 						</div>;
 		}
 		let mobileLinksClass = classNames('mobile-links', {'show': this.state.burgerOpen});

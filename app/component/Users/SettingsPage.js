@@ -64,9 +64,11 @@ class SettingsPage extends Component {
             userMessage = <p>{this.props.userMessage}</p>;
         }
         if(!this.props.user) {
-            return <div className="wrapper">
+            return (
+                    <div className="wrapper">
                         <p>Please <Link to="/login">log in</Link> or <Link to="/signup">sign up</Link> to update your settings.</p>
-                    </div>;
+                    </div>
+                    );
         }
         return (
             <div className="wrapper">
