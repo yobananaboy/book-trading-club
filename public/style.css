@@ -35,7 +35,7 @@ h1, p {
   margin-right: 5px;
   flex: 1 1 200px; }
 
-.nav, .footer, .trades, .book-section-header, .body, .login-form, .signup-form, .settings-form {
+.nav, .footer, .trades, .book-section-header, .body, .login-form, .signup-form, .settings-form, .error-message-wrapper {
   margin-left: 5px;
   margin-right: 5px;
   flex: 0 1 100%;
@@ -255,24 +255,24 @@ a {
     max-width: 100%;
     height: 200px; }
 
-.login-form, .signup-form, .settings-form {
+.login-form, .signup-form, .settings-form, .error-message-wrapper {
   margin: 10px auto;
   width: 60%;
   background-color: #fafafa;
   padding-left: 40px;
   border-bottom: 2px solid #0c0c0c; }
-  .login-form a, .signup-form a, .settings-form a {
+  .login-form a, .signup-form a, .settings-form a, .error-message-wrapper a {
     color: #2286c3; }
-    .login-form a:hover, .signup-form a:hover, .settings-form a:hover {
+    .login-form a:hover, .signup-form a:hover, .settings-form a:hover, .error-message-wrapper a:hover {
       color: #64b5f6; }
-  .login-form .form-group, .signup-form .form-group, .settings-form .form-group {
+  .login-form .form-group, .signup-form .form-group, .settings-form .form-group, .error-message-wrapper .form-group {
     margin: 20px 0; }
-    .login-form .form-group label, .signup-form .form-group label, .settings-form .form-group label {
+    .login-form .form-group label, .signup-form .form-group label, .settings-form .form-group label, .error-message-wrapper .form-group label {
       display: inline-block;
       width: 8em;
       font-weight: bold;
       margin-right: 0.5em; }
-    .login-form .form-group input, .signup-form .form-group input, .settings-form .form-group input {
+    .login-form .form-group input, .signup-form .form-group input, .settings-form .form-group input, .error-message-wrapper .form-group input {
       width: 70%;
       margin-top: 0.5em;
       padding: 0.5em;
@@ -282,9 +282,9 @@ a {
       border-left: none;
       border-right: none;
       border-bottom: 2px solid #0c0c0c; }
-  .login-form .error-message, .signup-form .error-message, .settings-form .error-message {
+  .login-form .error-message, .signup-form .error-message, .settings-form .error-message, .error-message-wrapper .error-message {
     color: #ff3d00; }
-  .login-form .reg-form-button, .signup-form .reg-form-button, .settings-form .reg-form-button {
+  .login-form .reg-form-button, .signup-form .reg-form-button, .settings-form .reg-form-button, .error-message-wrapper .reg-form-button {
     display: block;
     padding: 10px;
     border-radius: 3px;
@@ -292,19 +292,19 @@ a {
     text-align: center;
     border: none;
     margin: 0 auto; }
-  .login-form #login-form-button, .login-form #settings-form-button, .signup-form #login-form-button, .signup-form #settings-form-button, .settings-form #login-form-button, .settings-form #settings-form-button {
+  .login-form #login-form-button, .login-form #settings-form-button, .signup-form #login-form-button, .signup-form #settings-form-button, .settings-form #login-form-button, .settings-form #settings-form-button, .error-message-wrapper #login-form-button, .error-message-wrapper #settings-form-button {
     color: #0c0c0c;
     background-color: #00e676;
     border-bottom: 2px solid #009a4f;
     cursor: pointer; }
-    .login-form #login-form-button:active, .login-form #settings-form-button:active, .signup-form #login-form-button:active, .signup-form #settings-form-button:active, .settings-form #login-form-button:active, .settings-form #settings-form-button:active {
+    .login-form #login-form-button:active, .login-form #settings-form-button:active, .signup-form #login-form-button:active, .signup-form #settings-form-button:active, .settings-form #login-form-button:active, .settings-form #settings-form-button:active, .error-message-wrapper #login-form-button:active, .error-message-wrapper #settings-form-button:active {
       transform: translateY(2px);
       border: none !important; }
-  .login-form #signup-form-button, .signup-form #signup-form-button, .settings-form #signup-form-button {
+  .login-form #signup-form-button, .signup-form #signup-form-button, .settings-form #signup-form-button, .error-message-wrapper #signup-form-button {
     background-color: #ff3d00;
     border-bottom: 2px solid #b32b00;
     cursor: pointer; }
-    .login-form #signup-form-button:active, .signup-form #signup-form-button:active, .settings-form #signup-form-button:active {
+    .login-form #signup-form-button:active, .signup-form #signup-form-button:active, .settings-form #signup-form-button:active, .error-message-wrapper #signup-form-button:active {
       transform: translateY(2px);
       border: none !important; }
 
@@ -378,7 +378,7 @@ a {
       max-width: 100%;
       height: auto;
       max-height: 300px; }
-  .login-form, .signup-form {
+  .login-form, .signup-form, .error-message-wrapper {
     width: 100%; } }
 
 .loader {
