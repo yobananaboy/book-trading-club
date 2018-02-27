@@ -11,8 +11,8 @@ export const AvailableBooks = (props) => {
     return (
                 <div className="wrapper">
                     {booktrades}
-                    <BookSectionHeader {...props} />
-                    <BookList {...props} display='available' />
+                    <BookSectionHeader {...props} booksToDisplay='available' />
+                    <BookList {...props} booksToDisplay='available' />
                 </div>
         );
 };
