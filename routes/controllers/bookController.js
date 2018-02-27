@@ -3,6 +3,7 @@ const GoogleBooks = require('google-books-search');
 const mongoose = require('mongoose');
 
 import { booksUpdated, booksHaveErrored } from '../../app/actions/books';
+import { userUpdated } from '../../app/actions/users';
 
 import React, { Component } from 'react';
 import { renderToString } from 'react-dom/server';
@@ -212,7 +213,9 @@ exports.decline_book_trade_request = (req, res) => {
 };
 
 exports.render_server_data = (req, res) => {
-	
+	if(req.user) {
+		store.dispatch(userUpdated({user: req.user}));
+	}
 	Book.find({}, (err, booksData) => {
 		if(err) {
 			console.log(err);
