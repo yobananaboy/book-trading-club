@@ -16,10 +16,9 @@ export const checkUserLoggedIn = () => {
                     dispatch(userUpdated(false));
                 }
             })
-            .then(err => {
-                if(err) {
-                    dispatch(userUpdated(false));
-                }
+            .catch(err => {
+                console.log(err);
+                dispatch(userUpdated(false));
             });
     }; 
 };
@@ -32,11 +31,9 @@ export const updateUser = (user) => {
                     dispatch(updateUserMessage('User settings updated'));
                 }
             })
-            .then(err => {
-                if(err) {
-                    console.log(err);
-                    dispatch(updateUserMessage('Could not update user settings. Please try again.'));
-                }
+            .catch(err => {
+                console.log(err);
+                dispatch(updateUserMessage('Could not update user settings. Please try again.'));
             });
     };
 };
@@ -52,10 +49,9 @@ export const signup = (user) => {
                     dispatch(updateUserMessage(res.data.message));
                 }
             })
-            .then(err => {
-                if(err) {
-                    dispatch(updateUserMessage('* Could not sign up. Please try again.'));
-                }
+            .catch(err => {
+                console.log(err);
+                dispatch(updateUserMessage('* Could not sign up. Please try again.'));
             });
     };
 };
@@ -71,10 +67,9 @@ export const login = (user) => {
                     dispatch(updateUserMessage(res.data.message));
                 }
             })
-            .then(err => {
-                if(err) {
-                    dispatch(updateUserMessage('* There was an error loggin in. Please try again.'));
-                }
+            .catch(err => {
+                console.log(err);
+                dispatch(updateUserMessage('* There was an error loggin in. Please try again.'));
             });
     };
 };
