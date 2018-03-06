@@ -11,11 +11,11 @@ export const BookTile = (props) => {
         }
         // if a user owns a book, let them know
         if(props.user._id === props.book.bookOwner) {
-            tradeStatus = <p class="trade-status-message received">You received this book</p>;
+            tradeStatus = <p className="trade-status-message received">You received this book</p>;
         }
         // if a user has a book up for trade, let them know
         if(props.user._id === props.book.bookPutUpForTradeBy && !props.book.bookOwner && !props.book.tradeRequestedBy) {
-            tradeStatus = <p class="trade-status-message up-for-trade">You've put this book up for trade</p>;
+            tradeStatus = <p className="trade-status-message up-for-trade">You've put this book up for trade</p>;
         }
         // let user accept trade if they have put book up for trade and trade requested
         if(props.user._id === props.book.bookPutUpForTradeBy && !props.book.bookOwner && props.book.tradeRequestedBy) {
@@ -23,11 +23,11 @@ export const BookTile = (props) => {
         }
         // if a user has traded a book, let them know
         if(props.user._id === props.book.bookPutUpForTradeBy && props.book.bookOwner) {
-            tradeStatus = <p class="trade-status-message traded">You traded this book away</p>;
+            tradeStatus = <p className="trade-status-message traded">You traded this book away</p>;
         }
         // if a user has requested a book, let them know
         if(props.user._id === props.book.tradeRequestedBy && !props.book.bookOwner) {
-            tradeStatus = <p class="trade-status-message requested">You've requested this book</p>;
+            tradeStatus = <p className="trade-status-message requested">You've requested this book</p>;
         }
     }
     return(

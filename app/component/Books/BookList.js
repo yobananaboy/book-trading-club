@@ -17,9 +17,11 @@ class BookList extends Component {
                     booklist.push(<BookTile {...this.props} book={book} />);
                 }
                 // if available books, push books that have no bookowner and nobody requesting the book as long as they are not the current user
-                if(display === 'available' && !book.bookOwner && !book.tradeRequestedBy) {
-                    if(book.bookOwner !== this.props.user._id && book.bookPutUpForTradeBy !== this.props.user._id) {
-                        booklist.push(<BookTile {...this.props} book={book} />);    
+                if(display === 'available') {
+                    if(book.bookOwner == null && book.tradeRequestedBy == null) {
+                        if(book.bookPutUpForTradeBy != this.props.user._id) {
+                            booklist.push(<BookTile {...this.props} book={book} />);        
+                        }
                     }
                 }
                 // if displaying user's books, just display ones where the user id matches either book owner or book put up for trade

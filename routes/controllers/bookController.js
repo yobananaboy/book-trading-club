@@ -17,20 +17,20 @@ import { Provider } from 'react-redux';
 
 import routes from '../../app/routes/routes';
 
-let store = configureStore();
-
 // get book data
 exports.get_book_data = (req, res) => {
 	// find all books on database, send data if no error
-	Book.find({}, (err, booksData) => {
-		if (err) {
+	Book.find({}).exec()
+		.then(booksData => {
+			res.send(JSON.stringify({ books: booksData }));
+		})
+		.catch(err => {
+			console.log("mongoose error");
 			console.log(err);
 			res.send({
 				err: true
 			});
-		}
-		res.send(JSON.stringify({ books: booksData }));
-	});
+		});
 };
 
 exports.make_book_search = (req, res) => {
@@ -213,20 +213,25 @@ exports.decline_book_trade_request = (req, res) => {
 };
 
 exports.render_server_data = (req, res) => {
+	let store = configureStore();
 	if (typeof req.user != "undefined") {
 		store.dispatch(userUpdated(req.user));
-	} else {
-		store.dispatch(userUpdated(false));
 	}
-	Book.find({}, (err, booksData) => {
-		if(err) {
+	Book.find({}).exec()
+		.then(booksData => {
+			store.dispatch(booksUpdated(booksData));	
+			renderData();
+		})
+		.catch(err => {
 			console.log(err);
-			return store.dispatch(booksHaveErrored(true));
-		}
-		store.dispatch(booksUpdated(booksData));
+			store.dispatch(booksHaveErrored(true));
+			renderData();
+	});
+	
+	function renderData() {
 		let data = store.getState();
 		let context = {};
-        const content = renderToString(
+        let content = renderToString(
           <Provider store={store}>
             <StaticRouter location={req.url} context={context}>
               {renderRoutes(routes)}
@@ -237,5 +242,5 @@ exports.render_server_data = (req, res) => {
           res.status(404);
         }
         res.render('index', {data: JSON.stringify(data), content });
-	});
+	}
 };

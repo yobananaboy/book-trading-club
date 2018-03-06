@@ -12,9 +12,11 @@ class App extends Component {
         super(props);
     }
     
-    componentWillMount() {
-        this.props.checkUserLoggedIn();
-        if(!this.props.books) {
+    componentDidMount() {
+        if(!this.props.user) {
+            this.props.checkUserLoggedIn();    
+        }
+        if(this.props.books.length < 1) {
             this.props.getBooks();    
         }
     }
