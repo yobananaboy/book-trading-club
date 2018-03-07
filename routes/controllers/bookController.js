@@ -25,7 +25,6 @@ exports.get_book_data = (req, res) => {
 			res.send(JSON.stringify({ books: booksData }));
 		})
 		.catch(err => {
-			console.log("mongoose error");
 			console.log(err);
 			res.send({
 				err: true
@@ -45,51 +44,52 @@ exports.make_book_search = (req, res) => {
 			res.send(JSON.stringify({
 				err: true
 			}));
-		}
-		// get the first result
-		let bookData = results[0];
-		// get authors - convert array to string if length is longer than one author
-		let authors = 'Could not get data';
-		if(bookData.authors) {
-			authors = bookData.authors[0];
-			if (bookData.authors.length > 1) {
-				authors = bookData.authors.join(', ');
-			}	
-		}
-		let newId = new mongoose.mongo.ObjectId();
-		let book = {
-			_id: newId,
-			title: bookData.title,
-			authors,
-			img: bookData.thumbnail,
-			bookPutUpForTradeBy: userWhoMadeSearch,
-			bookTradedWith: null,
-			tradeRequestedBy: null,
-			bookOwner: null
-		};
-		// add book to database
-		let newBook = new Book(book);
-		newBook.save(err => {
-			// handle error
-			if (err) {
-				console.log(err);
-				res.send(JSON.stringify({
-					err: true
-				}));
+		} else {
+			// get the first result
+			let bookData = results[0];
+			// get authors - convert array to string if length is longer than one author
+			let authors = 'Could not get data';
+			if(bookData.authors) {
+				authors = bookData.authors[0];
+				if (bookData.authors.length > 1) {
+					authors = bookData.authors.join(', ');
+				}	
 			}
-			// then find all books and emit to all users
-			Book.find({}, (err, booksData) => {
+			let newId = new mongoose.mongo.ObjectId();
+			let book = {
+				_id: newId,
+				title: bookData.title,
+				authors,
+				img: bookData.thumbnail,
+				bookPutUpForTradeBy: userWhoMadeSearch,
+				bookTradedWith: null,
+				tradeRequestedBy: null,
+				bookOwner: null
+			};
+			// add book to database
+			let newBook = new Book(book);
+			newBook.save(err => {
+				// handle error
 				if (err) {
 					console.log(err);
 					res.send(JSON.stringify({
 						err: true
 					}));
 				}
-				res.send(JSON.stringify({
-					books: booksData
-				}));
-			});
-		});
+				// then find all books and emit to all users
+				Book.find({}, (err, booksData) => {
+					if (err) {
+						console.log(err);
+						res.send(JSON.stringify({
+							err: true
+						}));
+					}
+					res.send(JSON.stringify({
+						books: booksData
+					}));
+				});
+			});	
+		}
 	});
 };
 

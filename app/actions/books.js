@@ -15,17 +15,16 @@ export const makeBookSearch = (user, search) => {
 		};
 		axios.post(searchUrl, data)
 			.then(res => {
-				if (res.data.books) {
+				if (res.data.book) {
 					dispatch(bookSearchError(false));
 					dispatch(booksUpdated(res.data.books));
 				} else if (res.data.err) {
 					dispatch(bookSearchError("* Could not search for book. Please try again"));
 				}
 			})
-			.then(err => {
-				if (err) {
-					dispatch(bookSearchError("* Could not search for book. Please try again"));
-				}
+			.catch(err => {
+				console.log(err);
+				dispatch(bookSearchError("* Could not search for book. Please try again"));
 			});
 	};
 };
@@ -40,10 +39,9 @@ export const getBooks = () => {
 					dispatch(booksHaveErrored(true));
 				}
 			})
-			.then(err => {
-				if (err) {
-					dispatch(booksHaveErrored(true));
-				}
+			.catch(err => {
+				console.log(err);
+				dispatch(booksHaveErrored(true));
 			});
 	};
 };
