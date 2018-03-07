@@ -200,9 +200,11 @@ a {
     margin: 5px 5% 5px 5%;
     width: 40%; }
 
-.book-section-header h1 {
+.book-section-header h1, .book-section-header .intro {
   padding-bottom: 20px;
-  color: white;
+  color: #fafafa; }
+
+.book-section-header h1 {
   border-bottom: 2px solid #fafafa; }
 
 .book-section-header .error-message {
@@ -243,6 +245,11 @@ a {
   #book-search-button:active {
     transform: translateY(2px);
     border-bottom: 2px solid #005CB2; }
+
+label#search {
+  display: block;
+  color: #fafafa;
+  margin-bottom: 1em; }
 
 .book {
   boder-radius: 3px;
@@ -382,7 +389,7 @@ a {
     width: 100%; } }
 
 .loader {
-  border: 16px solid white;
+  border: 16px solid #fafafa;
   border-top: 16px solid #ff5252;
   border-radius: 50%;
   width: 120px;
