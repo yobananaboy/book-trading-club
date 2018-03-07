@@ -1,6 +1,9 @@
-const Book = require('../../config/database').Books;
-const GoogleBooks = require('google-books-search');
-const mongoose = require('mongoose');
+require('dotenv').config();
+
+let Book = require('../../config/database').Books;
+let GoogleBooks = require('google-books-search-2');
+let mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 
 import { booksUpdated, booksHaveErrored } from '../../app/actions/books';
 import { userUpdated, checkUserLoggedIn } from '../../app/actions/users';
@@ -20,7 +23,7 @@ import routes from '../../app/routes/routes';
 // get book data
 exports.get_book_data = (req, res) => {
 	// find all books on database, send data if no error
-	Book.find({}).exec()
+	Book.find({})
 		.then(booksData => {
 			res.send(JSON.stringify({ books: booksData }));
 		})
@@ -37,14 +40,8 @@ exports.make_book_search = (req, res) => {
 	let search = req.body.search.toString();
 	let userWhoMadeSearch = req.body.user._id;
 	// make api call to Google books
-	GoogleBooks.search(search, (err, results) => {
-		// error handling
-		if (err) {
-			console.log(err);
-			res.send(JSON.stringify({
-				err: true
-			}));
-		} else {
+	GoogleBooks.search(search)
+		.then(results => {
 			// get the first result
 			let bookData = results[0];
 			// get authors - convert array to string if length is longer than one author
@@ -68,29 +65,34 @@ exports.make_book_search = (req, res) => {
 			};
 			// add book to database
 			let newBook = new Book(book);
-			newBook.save(err => {
-				// handle error
-				if (err) {
+			newBook.save()
+				.then(res => {
+					Book.find({})
+						.then(booksData => {
+							res.json({
+								books: booksData
+							});
+						})
+						.catch(err => {
+							console.log(err);
+							res.json({
+								err: true
+							});
+						});
+				})
+				.catch(err => {
 					console.log(err);
 					res.send(JSON.stringify({
 						err: true
 					}));
-				}
-				// then find all books and emit to all users
-				Book.find({}, (err, booksData) => {
-					if (err) {
-						console.log(err);
-						res.send(JSON.stringify({
-							err: true
-						}));
-					}
-					res.send(JSON.stringify({
-						books: booksData
-					}));
 				});
-			});	
-		}
-	});
+		})
+		.catch(err => {
+			console.log(err);
+			res.send(JSON.stringify({
+				err: true
+			}));
+		});
 };
 
 // make book trade request
@@ -217,7 +219,7 @@ exports.render_server_data = (req, res) => {
 	if (typeof req.user != "undefined") {
 		store.dispatch(userUpdated(req.user));
 	}
-	Book.find({}).exec()
+	Book.find({})
 		.then(booksData => {
 			store.dispatch(booksUpdated(booksData));	
 			renderData();
