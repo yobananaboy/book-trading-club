@@ -122,13 +122,13 @@ exports.make_book_trade_request = (req, res) => {
 			Book.find({}, (err, booksData) => {
 				if (err) {
 					console.log(err);
-					res.send(JSON.stringify({
+					res.json({
 						err: true
-					}));
+					});
 				}
-				res.send(JSON.stringify({
+				res.json({
 					books: booksData
-				}));
+				});
 			});
 		});
 	});
@@ -143,9 +143,9 @@ exports.accept_book_trade_request = (req, res) => {
 	}, (err, bookData) => {
 		if (err) {
 			console.log(err);
-			res.send(JSON.stringify({
+			res.json({
 				err: true
-			}));
+			});
 		}
 		// trade accepted
 		// this means the book has an owner, which we update		
@@ -153,21 +153,21 @@ exports.accept_book_trade_request = (req, res) => {
 		bookData.save(err => {
 			if (err) {
 				console.log(err);
-				res.send(JSON.stringify({
+				res.json({
 					err: true
-				}));
+				});
 			}
 			// get books and send updated info to client
 			Book.find({}, (err, booksData) => {
 				if (err) {
 					console.log(err);
-					res.send(JSON.stringify({
+					res.json({
 						err: true
-					}));
+					});
 				}
-				res.send(JSON.stringify({
+				res.json({
 					books: booksData
-				}));
+				});
 			});
 		});
 	});
@@ -192,21 +192,21 @@ exports.decline_book_trade_request = (req, res) => {
 		bookData.save(err => {
 			if (err) {
 				console.log(err);
-				res.send(JSON.stringify({
+				res.json({
 					err: true
-				}));
+				});
 			}
 			// get books and send updated info to client
 			Book.find({}, (err, booksData) => {
 				if (err) {
 					console.log(err);
-					res.send(JSON.stringify({
+					res.json({
 						err: true
-					}));
+					});
 				}
-				res.send(JSON.stringify({
+				res.json({
 					books: booksData
-				}));
+				});
 			});
 		});
 	});
