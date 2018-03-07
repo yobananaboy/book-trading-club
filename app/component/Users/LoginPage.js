@@ -61,8 +61,10 @@ class LoginPage extends Component {
             <div class="wrapper">
                 <form onSubmit={this.handleSubmit} className="login-form">
                 	<p>Please enter a username and password if you have already registered.</p>
-                	<p></p>
-                	<p>If you have not, <Link to="/signup">sign up here</Link></p>
+                	<p>If you have not, <Link to="/signup">sign up here</Link>.</p>
+                	<p>If you don't want to register, you can use the guest account:</p>
+                	<p>Email: guest@guest.com</p>
+                	<p>Password: guest</p>
                 	<div class="form-group">
                 		<label>Email address*</label> <input class="login-signup-form" name="email" type="text" value={this.props.email} id="email-input" onChange={this.handleChange} />
                 	</div>
