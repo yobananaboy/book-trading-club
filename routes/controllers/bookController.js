@@ -6,7 +6,7 @@ let mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 import { booksUpdated, booksHaveErrored } from '../../app/actions/books';
-import { userUpdated, checkUserLoggedIn } from '../../app/actions/users';
+import { userUpdated } from '../../app/actions/users';
 
 import React, { Component } from 'react';
 import { renderToString } from 'react-dom/server';
@@ -19,6 +19,34 @@ import configureStore from '../../app/store/configureStore';
 import { Provider } from 'react-redux';
 
 import routes from '../../app/routes/routes';
+
+const saveBook = (req, res, book) => {
+	book.save({})
+		.then(result => {
+			getAllBooksAndSendData(req, res);
+		})
+		.catch(err => {
+			console.log(err);
+			res.json({
+				err: true
+			});
+		});
+};
+
+const getAllBooksAndSendData = (req, res) => {
+	Book.find({})
+		.then(books => {
+			res.json({
+				books
+			});
+		})
+		.catch(err => {
+			console.log(err);
+			res.json({
+				err: true
+			});
+		});
+};
 
 // get book data
 exports.get_book_data = (req, res) => {
@@ -65,33 +93,7 @@ exports.make_book_search = (req, res) => {
 			};
 			// add book to database
 			let newBook = new Book(book);
-			newBook.save()
-				.then(res => {
-					Book.find({})
-						.then(booksData => {
-							res.json({
-								books: booksData
-							});
-						})
-						.catch(err => {
-							console.log(err);
-							res.json({
-								err: true
-							});
-						});
-				})
-				.catch(err => {
-					console.log(err);
-					res.send(JSON.stringify({
-						err: true
-					}));
-				});
-		})
-		.catch(err => {
-			console.log(err);
-			res.send(JSON.stringify({
-				err: true
-			}));
+			saveBook(req, res, newBook);
 		});
 };
 
@@ -103,37 +105,19 @@ exports.make_book_trade_request = (req, res) => {
 	let userRequestingTrade = req.body.user._id;
 	// find book on db by id of book requested, handling errors
 	Book.findOne({
-		_id: requestedBookId
-	}, (err, bookData) => {
-		if (err) {
+			_id: requestedBookId
+	})
+		.then(bookData => {
+			// update trade request on book and save to database
+			bookData.tradeRequestedBy = userRequestingTrade;
+			saveBook(req, res, bookData);
+		})
+		.catch(err => {
 			console.log(err);
-			res.send(JSON.stringify({
+			res.json({
 				err: true
-			}));
-		}
-		// update trade request on book and save to database
-		bookData.tradeRequestedBy = userRequestingTrade;
-		bookData.save(err => {
-			if (err) {
-				console.log(err);
-				res.send(JSON.stringify({
-					err: true
-				}));
-			}
-			// get books and send updated info to client
-			Book.find({}, (err, booksData) => {
-				if (err) {
-					console.log(err);
-					res.json({
-						err: true
-					});
-				}
-				res.json({
-					books: booksData
-				});
 			});
 		});
-	});
 };
 
 exports.accept_book_trade_request = (req, res) => {
@@ -142,37 +126,19 @@ exports.accept_book_trade_request = (req, res) => {
 	// find book on db by id of book requested, handling errors
 	Book.findOne({
 		_id: acceptedBookId
-	}, (err, bookData) => {
-		if (err) {
+	})
+		.then(bookData => {
+			// trade accepted
+			// this means the book has an owner, which we update		
+			bookData.bookOwner = bookData.tradeRequestedBy;
+			saveBook(req, res, bookData);
+		})
+		.catch(err => {
 			console.log(err);
 			res.json({
 				err: true
 			});
-		}
-		// trade accepted
-		// this means the book has an owner, which we update		
-		bookData.bookOwner = bookData.tradeRequestedBy;
-		bookData.save(err => {
-			if (err) {
-				console.log(err);
-				res.json({
-					err: true
-				});
-			}
-			// get books and send updated info to client
-			Book.find({}, (err, booksData) => {
-				if (err) {
-					console.log(err);
-					res.json({
-						err: true
-					});
-				}
-				res.json({
-					books: booksData
-				});
-			});
 		});
-	});
 };
 
 exports.decline_book_trade_request = (req, res) => {
@@ -181,37 +147,19 @@ exports.decline_book_trade_request = (req, res) => {
 	// find book on db by id of book requested, handling errors
 	Book.findOne({
 		_id: declinedBookId
-	}, (err, bookData) => {
-		if (err) {
+	})
+		.then(bookData => {
+			// trade declined
+			// we need to update trade requested by to null - nobody has requested the trade anymore
+			bookData.tradeRequestedBy = null;
+			saveBook(req, res, bookData);
+		})
+		.catch(err => {
 			console.log(err);
-			res.send(JSON.stringify({
+			res.json({
 				err: true
-			}));
-		}
-		// trade declined
-		// we need to update trade requested by to null - nobody has requested the trade anymore
-		bookData.tradeRequestedBy = null;
-		bookData.save(err => {
-			if (err) {
-				console.log(err);
-				res.json({
-					err: true
-				});
-			}
-			// get books and send updated info to client
-			Book.find({}, (err, booksData) => {
-				if (err) {
-					console.log(err);
-					res.json({
-						err: true
-					});
-				}
-				res.json({
-					books: booksData
-				});
 			});
 		});
-	});
 };
 
 exports.render_server_data = (req, res) => {
